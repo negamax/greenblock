@@ -1,0 +1,27 @@
+/**
+ * New model file
+ */
+
+namespace org.greenblock.model
+
+asset GreenCredit identified by name {
+  o String name
+  o Integer quantity
+  --> Owner entity
+}
+
+abstract participant Owner identified by name {
+    o String name
+}
+
+participant Regulator extends Owner {
+
+}
+
+participant Corporation extends Owner {
+}
+
+transaction grantCredit {
+  --> GreenCredit credit
+  o Integer number
+}
