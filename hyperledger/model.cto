@@ -16,6 +16,7 @@ abstract participant Owner identified by name {
 
 abstract participant Device identified by uuid {
   o String uuid
+  o Double[] emissions
 }
 
 participant Regulator extends Owner {
@@ -44,4 +45,21 @@ participant Insurer extends Owner {
 transaction grantCredit {
   --> GreenCredit credit
   o Integer number
+}
+
+//received automatically based on compliance
+transaction autoCredit {
+  --> GreenCredit credit
+  o Integer number
+}
+
+
+//from one Owner to another
+transaction transferCredit {
+  --> GreenCredit credit
+  o Integer number
+}
+
+transaction recordEmission {
+  o Double emissions
 }
