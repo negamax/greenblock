@@ -14,11 +14,31 @@ abstract participant Owner identified by name {
     o String name
 }
 
+abstract participant Device identified by uuid {
+  o String uuid
+}
+
 participant Regulator extends Owner {
 
 }
 
 participant Corporation extends Owner {
+  o Integer complianceScore
+}
+
+participant HomeSensor extends Device {
+  --> People owner
+}
+
+participant CarSensor extends Device {
+  --> People owner
+}
+
+participant People extends Owner {
+  o String nationalID
+}
+
+participant Insurer extends Owner {
 }
 
 transaction grantCredit {
