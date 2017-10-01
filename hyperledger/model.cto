@@ -24,7 +24,7 @@ participant Regulator extends Owner {
 }
 
 participant Corporation extends Owner {
-  o Integer complianceScore
+  o Integer complianceScore optional
 }
 
 participant HomeSensor extends Device {
@@ -63,3 +63,9 @@ transaction transferCredit {
 transaction recordEmission {
   o Double emissions
 }
+
+transaction recordEmissionHome {
+  o Double emissions
+}
+
+event Granted {}
