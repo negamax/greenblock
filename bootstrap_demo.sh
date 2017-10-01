@@ -26,4 +26,5 @@ curl -X POST --header 'Content-Type: application/json' --header 'Accept: applica
          "entity": "resource:org.greenblock.model.Corporation#GreenCorp" \ 
    }' 'http://localhost:3000/api/org.greenblock.model.GreenCredit'
 
-python -m http.server
+cd Regulator-frontend && python -m http.server 8001 &
+cd Owner-frontend && python -m http.server 8000

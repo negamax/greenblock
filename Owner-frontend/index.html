@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+  <head>
+     <title>Regulator console</title>
+     <script src="//code.jquery.com/jquery.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.2/umd/popper.min.js"></script>
+     <link href="css/bootstrap.min.css" rel="stylesheet"></link>
+      <style>
+      header {
+        background: green;
+      }
+      .navtitle {
+        color: white;
+      }
+      
+      </style>
+     <script src="js/bootstrap.js"></script>
+
+     <script>
+
+      let ws = null;
+
+      $(document).ready(function () {
+
+        $title = $('.name');
+        $creditsavailable = $('.creditsavailable');
+				$corporations = $('.corporations');
+
+        update();
+
+        ws = new WebSocket("ws://localhost:3000/socketserver");
+
+        ws.onmessage = update;
+
+      });
+
+        function update() {
+          $.get('http://localhost:3000/api/org.greenblock.model.GreenCredit', function (data) {
+
+            //Find the regulator credit... massive hack until I figure out identities
+
+            const me = data.filter(data => !/Regulator/.test(data.entity))[0];
+
+            $title.text(me.name);
+            $creditsavailable.text(me.quantity);
+
+          });
+
+        }
+        
+     </script>
+  </head>
+  <body>
+    <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
+      <h1 class=navtitle>Greenblocks</h1>
+    </header>
+
+    <div class="jumbotron">
+      <h1 class="display-3">
+        <img width=200 src=https://image.freepik.com/free-icon/eco-energy_318-41529.jpg />
+        <span class=name>&nbsp;</span> energy consumption
+      </h1>
+    </div>
+    <h2 class='title'></h2>
+    <div class="card" style="width: 20rem;">
+          <div class="card-body">
+            <h4 class="card-title">Credits available</h4>
+            <h1 class="creditsavailable display-3"></h1>
+          </div>
+    </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Issue credits</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+				<ul class="corporations">
+				</ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+  </body>
+
+</html>
